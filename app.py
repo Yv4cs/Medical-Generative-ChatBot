@@ -13,10 +13,10 @@ app = Flask(__name__)
 
 load_dotenv()
 
-API_KEY=os.environ.get('API_KEY')
+PINECONE_API_KEY=os.environ.get('PINECONE_API_KEY')
 OPENAI_API_KEY=os.environ.get('OPENAI_API_KEY')
 
-os.environ["API_KEY"] = API_KEY
+os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 embeddings = download_hugging_face_embeddings()
@@ -26,7 +26,7 @@ index_name = "medicalbot"
 vectorstore = PineconeVectorStore(
     index_name="medicalbot",
     embedding=embeddings,
-    pinecone_api_key=API_KEY
+    pinecone_api_key=PINECONE_API_KEY
 )
 
 retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k":3})

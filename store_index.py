@@ -2,14 +2,14 @@ from src.helper import load_pdf_file, text_split, download_hugging_face_embeddin
 from pinecone.grpc import PineconeGRPC as Pinecone
 from pinecone import ServerlessSpec
 from langchain_pinecone import PineconeVectorStore
-from dotenv import load_dotenv
+from dotenv import load_dotenv,find_dotenv
 import os
 
 
-load_dotenv()
+load_dotenv(find_dotenv())
 
 PINECONE_API_KEY=os.environ.get('API_KEY')
-os.environ["API_KEY"] = PINECONE_API_KEY
+os.environ["API_KEY"] = "PINECONE_API_KEY"
 
 
 extracted_data=load_pdf_file(data='Data/')
@@ -38,7 +38,7 @@ from langchain_pinecone import PineconeVectorStore
 vectorstore = PineconeVectorStore(
     index_name="medicalbot",
     embedding=embeddings,
-    pinecone_api_key='PINECONE_API_KEY'
+    pinecone_api_key=PINECONE_API_KEY
 )
 
 vectorstore.add_documents(text_chunks)
